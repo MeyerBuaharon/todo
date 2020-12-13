@@ -7,15 +7,16 @@ import OnlineUsersWrapper from "./OnlineUsers/OnlineUsersWrapper";
 
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { WebSocketLink } from "@apollo/client/link/ws";
-
 import { useAuth0 } from "./Auth/react-auth0-spa";
 
-const createApolloClient = authToken => {
+
+const createApolloClient = (authToken) => {
 	return new ApolloClient({
 		link: new WebSocketLink({
-			uri: "wss://hasura.io/learn/graphql",
+			uri: 'wss://todoslist.hasura.app/v1/graphql',
 			options: {
 				reconnect: true,
+				timeout: 30000,
 				connectionParams: {
 					headers: {
 						Authorization: `Bearer ${authToken}`
@@ -23,7 +24,7 @@ const createApolloClient = authToken => {
 				}
 			}
 		}),
-		cache: new InMemoryCache()
+		cache: new InMemoryCache(),
 	});
 };
 
